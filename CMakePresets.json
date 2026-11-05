@@ -109,8 +109,12 @@
             "GGML_VULKAN": "OFF",
             "GGML_RPC": "OFF",
             "GGML_BLAS": "OFF",
+            "GGML_ACCELERATE": "OFF",
             "GGML_OPENMP": "OFF",
-            "LLAMA_BUILD_SERVER": "ON"
+            "LLAMA_BUILD_SERVER": "ON",
+            "LLAMA_BUILD_TESTS": "OFF",
+            "LLAMA_BUILD_EXAMPLES": "OFF",
+            "LLAMA_BUILD_TOOLS": "ON"
         }
     },
     {
