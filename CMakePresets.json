@@ -93,24 +93,30 @@
     { "name": "x64-windows-vulkan-release", "inherits": [ "base", "vulkan", "release" ] },
 
     {
-        "name": "cpu-portable",
-        "displayName": "CPU only: portable baseline",
-        "description": "No GPU/TPU/NPU runtime, external BLAS or OpenMP requirement; use a portable CPU baseline across supported operating systems and ISA families.",
-        "binaryDir": "${sourceDir}/build-cpu-portable",
+        "name": "cpu-only-base",
+        "hidden": true,
         "cacheVariables": {
             "CMAKE_BUILD_TYPE": "Release",
-            "GGML_NATIVE": "OFF",
-            "GGML_CPU_ALL_VARIANTS": "OFF",
             "GGML_BACKEND_DL": "OFF",
             "GGML_CUDA": "OFF",
             "GGML_HIP": "OFF",
+            "GGML_MUSA": "OFF",
             "GGML_SYCL": "OFF",
             "GGML_METAL": "OFF",
             "GGML_VULKAN": "OFF",
+            "GGML_WEBGPU": "OFF",
+            "GGML_OPENCL": "OFF",
+            "GGML_OPENVINO": "OFF",
+            "GGML_HEXAGON": "OFF",
+            "GGML_ZDNN": "OFF",
+            "GGML_ZENDNN": "OFF",
+            "GGML_ET": "OFF",
+            "GGML_VIRTGPU": "OFF",
             "GGML_RPC": "OFF",
             "GGML_BLAS": "OFF",
             "GGML_ACCELERATE": "OFF",
             "GGML_OPENMP": "OFF",
+            "GGML_CPU_ALL_VARIANTS": "OFF",
             "LLAMA_BUILD_SERVER": "ON",
             "LLAMA_BUILD_TESTS": "OFF",
             "LLAMA_BUILD_EXAMPLES": "OFF",
@@ -118,10 +124,39 @@
         }
     },
     {
+        "name": "cpu-portable",
+        "displayName": "CPU only: portable baseline",
+        "description": "Conservative CPU instruction baseline, no optional accelerator or third-party BLAS/OpenMP dependency; compile separately for each operating system and ISA family.",
+        "inherits": [
+            "cpu-only-base"
+        ],
+        "binaryDir": "${sourceDir}/build-cpu-portable",
+        "cacheVariables": {
+            "GGML_NATIVE": "OFF",
+            "GGML_SSE42": "OFF",
+            "GGML_AVX": "OFF",
+            "GGML_AVX_VNNI": "OFF",
+            "GGML_AVX2": "OFF",
+            "GGML_BMI2": "OFF",
+            "GGML_FMA": "OFF",
+            "GGML_F16C": "OFF",
+            "GGML_AVX512": "OFF",
+            "GGML_AVX512_VBMI": "OFF",
+            "GGML_AVX512_VNNI": "OFF",
+            "GGML_AVX512_BF16": "OFF",
+            "GGML_LASX": "OFF",
+            "GGML_LSX": "OFF",
+            "GGML_RVV": "OFF",
+            "GGML_VXE": "OFF"
+        }
+    },
+    {
         "name": "cpu-node-native",
-        "displayName": "CPU only: optimised for the build node",
-        "description": "Retain portable CPU-only dependencies but compile for the actual CPU ISA/features on this node; do not transplant the binary to a different CPU without compatibility qualification.",
-        "inherits": [ "cpu-portable" ],
+        "displayName": "CPU only: optimised for this build node",
+        "description": "CPU-only build with native ISA optimisations; compile/qualify per node and never distribute to different CPU features without an independent compatibility check.",
+        "inherits": [
+            "cpu-only-base"
+        ],
         "binaryDir": "${sourceDir}/build-cpu-node-native",
         "cacheVariables": {
             "GGML_NATIVE": "ON"
