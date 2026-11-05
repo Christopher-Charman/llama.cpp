@@ -90,6 +90,38 @@
     { "name": "x64-windows-sycl-release-f16", "inherits": [ "sycl-base", "release", "sycl_f16" ] },
 
     { "name": "x64-windows-vulkan-debug", "inherits": [ "base", "vulkan", "debug" ] },
-    { "name": "x64-windows-vulkan-release", "inherits": [ "base", "vulkan", "release" ] }
+    { "name": "x64-windows-vulkan-release", "inherits": [ "base", "vulkan", "release" ] },
+
+    {
+        "name": "cpu-portable",
+        "displayName": "CPU only: portable baseline",
+        "description": "No GPU/TPU/NPU runtime, external BLAS or OpenMP requirement; use a portable CPU baseline across supported operating systems and ISA families.",
+        "binaryDir": "${sourceDir}/build-cpu-portable",
+        "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Release",
+            "GGML_NATIVE": "OFF",
+            "GGML_CPU_ALL_VARIANTS": "OFF",
+            "GGML_BACKEND_DL": "OFF",
+            "GGML_CUDA": "OFF",
+            "GGML_HIP": "OFF",
+            "GGML_SYCL": "OFF",
+            "GGML_METAL": "OFF",
+            "GGML_VULKAN": "OFF",
+            "GGML_RPC": "OFF",
+            "GGML_BLAS": "OFF",
+            "GGML_OPENMP": "OFF",
+            "LLAMA_BUILD_SERVER": "ON"
+        }
+    },
+    {
+        "name": "cpu-node-native",
+        "displayName": "CPU only: optimised for the build node",
+        "description": "Retain portable CPU-only dependencies but compile for the actual CPU ISA/features on this node; do not transplant the binary to a different CPU without compatibility qualification.",
+        "inherits": [ "cpu-portable" ],
+        "binaryDir": "${sourceDir}/build-cpu-node-native",
+        "cacheVariables": {
+            "GGML_NATIVE": "ON"
+        }
+    }
   ]
 }
