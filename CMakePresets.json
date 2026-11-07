@@ -147,6 +147,7 @@
             "GGML_LASX": "OFF",
             "GGML_LSX": "OFF",
             "GGML_RVV": "OFF",
+            "GGML_RV_ZFH": "OFF",
             "GGML_VXE": "OFF"
         }
     },
