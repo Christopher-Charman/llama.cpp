@@ -116,6 +116,7 @@
             "GGML_BLAS": "OFF",
             "GGML_ACCELERATE": "OFF",
             "GGML_OPENMP": "OFF",
+            "GGML_CCACHE": "OFF",
             "GGML_CPU_ALL_VARIANTS": "OFF",
             "LLAMA_BUILD_SERVER": "ON",
             "LLAMA_BUILD_TESTS": "OFF",
